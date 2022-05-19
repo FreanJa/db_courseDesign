@@ -26,7 +26,8 @@ def search_template():
     dic = {}
     for row in cur.fetchall():
         # print(row)
-        dic[row[0]] = {'name': row[1], 'password': row[2], 'phone': row[3]}
+        # dic[row[0]] = {'name': row[1], 'password': row[2], 'phone': row[3]}
+        dic[row[1]] = row[2]
 
     print(dic)
     return jsonify(dic)
