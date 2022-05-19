@@ -23,12 +23,18 @@ def search_template():
     # sqlyi = "grant all privileges on *.* to tmp2@'%' identified by '123' with grant option;"
     # tmp = "flush privileges;"
     ret = cur.execute(sqlyj)
-    dic = {}
+    dic = {
+        'error': False,
+        'message': "Successfully retried all datas"
+           }
+    data = []
     for row in cur.fetchall():
         # print(row)
         # dic[row[0]] = {'name': row[1], 'password': row[2], 'phone': row[3]}
-        dic[row[1]] = row[2]
-
+        data.append({'name': row[1],
+                     'password': row[2],
+                     'phone': row[3]})
+    dic['data'] = data
     print(dic)
     return jsonify(dic)
 
