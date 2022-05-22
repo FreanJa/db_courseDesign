@@ -54,20 +54,19 @@ def user():
         data = json.loads(request.get_data(as_text=True))
 
         if data['state'] == 0:
-            state, o_email, o_user, desc = accountOpr.sign_in(data['account'], data['passwd'])
+            state, account, desc = accountOpr.sign_in(data['account'], data['passwd'])
             if state == 1:
                 response["error"] = False
             response["desc"] = desc
-            response["email"] = o_email
-            response["userName"] = o_user
+            response["account"] = account
 
         elif data['state'] == 1:
+            account = {"email": data['email'], "userName": data["username"]}
             state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'])
             if state == 1:
                 response["error"] = False
             response["desc"] = desc
-            response["email"] = data['email']
-            response["userName"] = data['passwd']
+            response["account"] = account
         else:
             print(data['state'])
             response["desc"] = "Invalid request status"
