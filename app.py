@@ -49,30 +49,34 @@ def create():
 @app.route("/user", methods=["POST", "GET"])
 def user():
     print(request.method)
-    response = {"error": True}
+    info = {"error": True, "desc": ""}
+    account = {"email": "", "userName": ""}
     if request.method == "POST":
         data = json.loads(request.get_data(as_text=True))
 
+        # 登陆
         if data['state'] == 0:
             state, account, desc = accountOpr.sign_in(data['account'], data['passwd'])
             if state == 1:
-                response["error"] = False
-            response["desc"] = desc
-            response["account"] = account
+                info["error"] = False
+            info["desc"] = desc
 
+        # 注册
         elif data['state'] == 1:
             account = {"email": data['email'], "userName": data["username"]}
             state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'])
             if state == 1:
-                response["error"] = False
-            response["desc"] = desc
-            response["account"] = account
+                info["error"] = False
+            info["desc"] = desc
+
+        # 未知错误
         else:
             print(data['state'])
-            response["desc"] = "Invalid request status"
+            info["desc"] = "Invalid request status"
     else:
-        response["desc"] = request.method
+        info["desc"] = request.method
 
+    response = {"account": account, "info": info}
     return jsonify(response)
 
 
