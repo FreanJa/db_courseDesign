@@ -10,22 +10,30 @@ import my_sql
 
 # 登陆
 def sign_in(in_usr, in_passwd):
+    flag = 1        # 1 - email
     db = my_sql.MySql()
     sql = "select * from userAccount where "
     if re.search('@', in_usr):
         sql = sql + "Email = " + "'" + in_usr + "'"
     else:
+        flag = 0
         sql = sql + "userName = " + "'" + in_usr + "'"
     count = db.get_count(sql)
     if count == 0:
         db.close_db()
-        return 0, "Invalid account"
+        if flag:
+            return 0, in_usr, "", "Invalid account"
+        else:
+            return 0, "", in_usr, "Invalid account"
     result = db.get_first_data(sql)
     db.close_db()
     if result[3] == in_passwd:
-        return 1, result[2]
+        return 1, result[1], result[2], "success"
     else:
-        return 0, "Wrong password"
+        if flag:
+            return 0, in_usr, "", "Wrong password"
+        else:
+            return 0, "", in_usr, "Wrong password"
 
 
 # 注册
@@ -53,11 +61,11 @@ def test_sign_in():
     username = "freanja"
     email = "freanja.l@gmail.com"
     passwd = "123"
-    state, desc = sign_in(email, passwd)
+    state, e_mail, user, desc = sign_in(email, passwd)
     if state == 0:
         print("[Error] " + desc)
     else:
-        print("👋 Welcome back " + desc)
+        print("👋 Welcome back " + user)
 
 
 def test_sign_up():

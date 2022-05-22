@@ -10,12 +10,12 @@ import pymysql
 class MySql:
     def __init__(self):
         self.db = pymysql.connect(
-            host='122.51.176.43',  # 服务器IP
-            user='tmp2',  # 用户名
-            passwd='123',  # 密码
-            # host='127.0.0.1',  # 服务器IP
-            # user='root',  # 用户名
-            # passwd='admin123',  # 密码
+            # host='122.51.176.43',  # 服务器IP
+            # user='tmp2',  # 用户名
+            # passwd='123',  # 密码
+            host='127.0.0.1',  # 服务器IP
+            user='root',  # 用户名
+            passwd='admin123',  # 密码
             db='db_course_design',  # 数据库名字
             charset='utf8',  # 字符集
         )

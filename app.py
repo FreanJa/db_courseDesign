@@ -18,7 +18,7 @@ import accountOpr
 app = Flask(__name__)
 
 
-@app.route('/posts')
+@app.route('/')
 def post():
     print(sql_server.search_template())
     return sql_server.search_template()
@@ -52,21 +52,28 @@ def user():
     response = {"error": True}
     if request.method == "POST":
         data = json.loads(request.get_data(as_text=True))
+
         if data['state'] == 0:
-            state, desc = accountOpr.sign_in(data['account'], data['passwd'])
+            state, o_email, o_user, desc = accountOpr.sign_in(data['account'], data['passwd'])
             if state == 1:
                 response["error"] = False
             response["desc"] = desc
+            response["email"] = o_email
+            response["userName"] = o_user
+
         elif data['state'] == 1:
             state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'])
             if state == 1:
                 response["error"] = False
             response["desc"] = desc
+            response["email"] = data['email']
+            response["userName"] = data['passwd']
         else:
             print(data['state'])
             response["desc"] = "Invalid request status"
     else:
         response["desc"] = request.method
+
     return jsonify(response)
 
 
