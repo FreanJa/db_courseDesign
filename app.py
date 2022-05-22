@@ -76,7 +76,7 @@ def user():
     else:
         info["desc"] = request.method
 
-    response = {"account": account, "info": info}
+    response = {"account": [account], "info": [info]}
     return jsonify(response)
 
 
