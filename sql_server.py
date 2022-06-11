@@ -8,8 +8,8 @@ user = ""
 passwd = ""
 db = ""
 
-def search_template():
 
+def search_template():
     myql = pymysql.connect(
         host='122.51.176.43',  # 服务器IP
         user='tmp2',  # 用户名

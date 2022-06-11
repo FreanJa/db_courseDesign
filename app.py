@@ -15,6 +15,7 @@ from flask import Response
 from flask import jsonify
 import sql_server
 import accountOpr
+import postOpr
 
 app = Flask(__name__)
 
@@ -78,11 +79,44 @@ def user():
             info["desc"] = "Invalid request status"
     else:
         info["desc"] = request.method
-
     response = {"account": [account], "info": [info]}
+    return jsonify(response)
+
+
+# 0 - signIn    1 - signUp
+@app.route("/fetchPosts", methods=["GET"])
+def fetch_posts():
+    info = {"error": True, "desc": ""}
+    state, postList, desc = postOpr.get_all_post()
+    if state == 1:
+        info["error"] = False
+    info["desc"] = desc
+    response = {"postList": [postList], "info": [info]}
+
+    for post in response["postList"]:
+        print(post)
+
     return jsonify(response)
 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
