@@ -83,7 +83,6 @@ def user():
     return jsonify(response)
 
 
-# 0 - signIn    1 - signUp
 @app.route("/fetchPosts", methods=["GET"])
 def fetch_posts():
     info = {"error": True, "desc": ""}
@@ -94,6 +93,23 @@ def fetch_posts():
     response = {"postList": postList, "count": count, "info": [info]}
 
     for post in response["postList"]:
+        print(post)
+
+    return jsonify(response)
+
+
+@app.route("/fetchComments", methods=["POST"])
+def fetch_comments():
+    data = json.loads(request.get_data(as_text=True))
+
+    info = {"error": True, "desc": ""}
+    state, count, comments, desc = postOpr.get_all_comments(data['postId'])
+    if state == 1:
+        info["error"] = False
+    info["desc"] = desc
+    response = {"comments": comments, "count": count, "info": [info]}
+
+    for post in response["comments"]:
         print(post)
 
     return jsonify(response)

@@ -8,7 +8,7 @@ import my_sql
 
 
 # 返回所有帖子
-def get_writer_info(id):
+def get_user_info(id):
     db = my_sql.MySql()
     sql = "select * from userAccount where uuid = '" + str(id) + "';"
 
@@ -40,7 +40,7 @@ def get_all_post():
 
     posts = []
     for row in result:
-        wn, wp = get_writer_info(row[4])
+        wn, wp = get_user_info(row[4])
         post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4],
                 "writerName": wn, "writerPhoto": wp, "text": row[5], "imgCount": row[6]}
         posts.append(post)
@@ -50,6 +50,30 @@ def get_all_post():
     #     print(post)
 
     return 1, count, posts, "success"
+
+
+def get_all_comments(id):
+    commentList = {}
+
+    db = my_sql.MySql()
+    sql = "select * from comments where postId = '" + str(id) + "';"
+
+    count = db.get_count(sql)
+
+    if count == 0:
+        db.close_db()
+        return 0, 0, commentList, "No comment."
+
+    result = db.get_mult_data(sql)
+    db.close_db()
+
+    comments = []
+    for row in result:
+        wn, wp = get_user_info(row[2])
+        comment = {"commentsId": row[0], "postId": row[1], "userId": row[2], "time": row[3], "text": row[4]}
+        comments.append(comment)
+
+    return 1, count, comments, "success"
 
 
 if __name__ == '__main__':
