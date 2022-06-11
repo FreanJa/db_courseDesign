@@ -34,7 +34,7 @@ def sign_in(in_usr, in_passwd):
         account["email"] = result[1]
         account["userName"] = result[2]
         account["password"] = result[3]
-        account["photo"] = result[4]
+        account["photo"] = str(result[4])
 
         return 1, account, "success"
     else:
