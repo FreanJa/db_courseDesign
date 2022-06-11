@@ -24,7 +24,7 @@ def get_all_post():
 
     posts = []
     for row in result:
-        post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writeId": row[4], "text": row[5]}
+        post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4], "text": row[5]}
         posts.append(post)
 
     postList["posts"] = posts
