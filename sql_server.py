@@ -18,8 +18,6 @@ def search_template():
         charset='utf8',  # 字符集
     )
 
-
-
     cur = myql.cursor()
     sqlyj = "select*from testConn;"
     # sqlyi = "grant all privileges on *.* to tmp2@'%' identified by '123' with grant option;"

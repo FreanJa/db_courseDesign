@@ -5,6 +5,7 @@
 # @File    : app.py
 # @Desc    :
 import json
+import random
 
 from flask import Flask
 from flask import Flask
@@ -50,7 +51,7 @@ def create():
 def user():
     print(request.method)
     info = {"error": True, "desc": ""}
-    account = {"email": "", "userName": ""}
+    account = {"email": "", "userName": "", "password": "", "photo": ""}
     if request.method == "POST":
         data = json.loads(request.get_data(as_text=True))
 
@@ -63,8 +64,10 @@ def user():
 
         # 注册
         elif data['state'] == 1:
-            account = {"email": data['email'], "userName": data["username"]}
-            state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'])
+            photo = str(random.randint(1, 105))
+            account = {"email": data['email'], "userName": data["username"], "password": data["passwd"],
+                       "photo": photo}
+            state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'], photo)
             if state == 1:
                 info["error"] = False
             info["desc"] = desc
