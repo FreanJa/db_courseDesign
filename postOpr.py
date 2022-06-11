@@ -69,8 +69,8 @@ def get_all_comments(id):
 
     comments = []
     for row in result:
-        wn, wp = get_user_info(row[2])
-        comment = {"commentsId": row[0], "postId": row[1], "userId": row[2], "time": row[3], "text": row[4]}
+        un, up = get_user_info(row[2])
+        comment = {"commentsId": row[0], "postId": row[1], "userId": row[2], "userName": un, "userPhoto": up, "time": row[3], "text": row[4]}
         comments.append(comment)
 
     return 1, count, comments, "success"
