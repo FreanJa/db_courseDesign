@@ -9,15 +9,15 @@ import my_sql
 
 # 返回所有帖子
 def get_all_post():
-    postList = {"count": 0, "posts": []}
+    postList = {}
     db = my_sql.MySql()
     sql = "select * from posts"
 
-    postList["count"] = db.get_count(sql)
+    count = db.get_count(sql)
 
-    if postList["count"] == 0:
+    if count == 0:
         db.close_db()
-        return 0, postList, "No posts."
+        return 0, 0, postList, "No posts."
 
     result = db.get_mult_data(sql)
     db.close_db()
@@ -27,16 +27,13 @@ def get_all_post():
         post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4], "text": row[5]}
         posts.append(post)
 
-    postList["posts"] = posts
-    for post in postList["posts"]:
-        # print(postList["posts"][post]["title"] + "\t" + postList["posts"][post]["text"])
-        print(post)
+    # postList["posts"] = posts
+    # for post in postList["posts"]:
+    #     print(post)
 
-    return 1, postList, "success"
+    return 1, count, posts, "success"
 
 
 if __name__ == '__main__':
-    error, posts, desc = get_all_post()
-    print(posts)
-    for post in posts:
-        print(post)
+    # error, posts, desc = get_all_post()
+    pass

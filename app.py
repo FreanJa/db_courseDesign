@@ -87,11 +87,11 @@ def user():
 @app.route("/fetchPosts", methods=["GET"])
 def fetch_posts():
     info = {"error": True, "desc": ""}
-    state, postList, desc = postOpr.get_all_post()
+    state, count, postList, desc = postOpr.get_all_post()
     if state == 1:
         info["error"] = False
     info["desc"] = desc
-    response = {"postList": [postList], "info": [info]}
+    response = {"postList": postList, "count": count, "info": [info]}
 
     for post in response["postList"]:
         print(post)
