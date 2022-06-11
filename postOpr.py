@@ -42,7 +42,7 @@ def get_all_post():
     for row in result:
         wn, wp = get_writer_info(row[4])
         post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4],
-                "writerName": wn, "writerPhoto": wp, "text": row[5]}
+                "writerName": wn, "writerPhoto": wp, "text": row[5], "imgCount": row[6]}
         posts.append(post)
 
     # postList["posts"] = posts
