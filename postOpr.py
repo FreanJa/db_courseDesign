@@ -8,6 +8,22 @@ import my_sql
 
 
 # 返回所有帖子
+def get_writer_info(id):
+    db = my_sql.MySql()
+    sql = "select * from userAccount where uuid = '" + str(id) + "';"
+
+    count = db.get_count(sql)
+
+    if count == 0:
+        db.close_db()
+        return "佚名", "60"
+
+    result = db.get_first_data(sql)
+    db.close_db()
+
+    return result[2], str(result[4])
+
+
 def get_all_post():
     postList = {}
     db = my_sql.MySql()
@@ -24,7 +40,9 @@ def get_all_post():
 
     posts = []
     for row in result:
-        post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4], "text": row[5]}
+        wn, wp = get_writer_info(row[4])
+        post = {"postId": row[0], "title": row[1], "subTitle": row[2], "time": row[3], "writerId": row[4],
+                "writerName": wn, "writerPhoto": wp, "text": row[5]}
         posts.append(post)
 
     # postList["posts"] = posts
