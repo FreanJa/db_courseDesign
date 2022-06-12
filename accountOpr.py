@@ -74,6 +74,8 @@ def modify_account(tag, id, new):
         sql = "update userAccount set username = '" + new + "' where uuid = " + str(id) + ";"
     elif tag == 1:
         sql = "update userAccount set photo = '" + new + "' where uuid = " + str(id) + ";"
+    elif tag == 2:
+        sql = "update userAccount set password = '" + new + "' where uuid = " + str(id) + ";"
     else:
         sql = "update userAccount set email = '" + new + "' where uuid = " + str(id) + ";"
     print(sql)
