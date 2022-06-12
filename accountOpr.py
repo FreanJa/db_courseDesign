@@ -82,8 +82,8 @@ def modify_account(tag, id, new):
     update = db.update(sql)
 
     if update == 0:
-        return True, "Unknown error, please contact your administrator"
-    return False, "Modify success!"
+        return {"error": True, "desc": "Unknown error, please contact your administrator"}
+    return {"error": False, "desc": "Modify success!"}
 
 
 def test_sign_in():

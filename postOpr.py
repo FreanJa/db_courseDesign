@@ -101,9 +101,9 @@ def remove_comment(commentId):
     print(sql)
     remove = db.insert(sql)
     if remove == 0:
-        return True, "Unknown error, please contact your administrator"
+        return {"error": True, "desc": "Unknown error, please contact your administrator"}
 
-    return False, "Remove success"
+    return {"error": False, "desc": "Remove success"}
 
 
 if __name__ == '__main__':
