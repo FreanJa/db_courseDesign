@@ -136,7 +136,7 @@ def create_comment():
 def modify_acc():
     data = json.loads(request.get_data(as_text=True))
     info = accountOpr.modify_account(data['tag'], data['userId'], data['new'])
-
+    print(info)
     return jsonify(info)
 
 
