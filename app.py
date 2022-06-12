@@ -52,7 +52,7 @@ def create():
 def user():
     print(request.method)
     info = {"error": True, "desc": ""}
-    account = {"email": "", "userName": "", "password": "", "photo": ""}
+    account = {"userId": -1, "email": "", "userName": "", "password": "", "photo": ""}
     if request.method == "POST":
         data = json.loads(request.get_data(as_text=True))
 
@@ -66,9 +66,9 @@ def user():
         # 注册
         elif data['state'] == 1:
             photo = str(random.randint(1, 105))
-            account = {"email": data['email'], "userName": data["username"], "password": data["passwd"],
+            account = {"userId": -1, "email": data['email'], "userName": data["username"], "password": data["passwd"],
                        "photo": photo}
-            state, desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'], photo)
+            state, account["userId"], desc = accountOpr.sign_up(data['email'], data['username'], data['passwd'], photo)
             if state == 1:
                 info["error"] = False
             info["desc"] = desc

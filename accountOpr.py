@@ -31,6 +31,7 @@ def sign_in(in_usr, in_passwd):
     db.close_db()
 
     if result[3] == in_passwd:
+        account["userId"] = result[0]
         account["email"] = result[1]
         account["userName"] = result[2]
         account["password"] = result[3]
@@ -58,9 +59,13 @@ def sign_up(in_email, in_name, in_passwd, rand_photo):
     print(sql)
     insert = db.insert(sql)
     if insert == 0:
-        return 0, "Unknown error, please contact your administrator"
+        return 0, -1, "Unknown error, please contact your administrator"
     print("insert success")
-    return 1, "Successful registration, go to login!"
+
+    sql = "select uuid from userAccount where email = '" + in_email + "';"
+    result = db.get_first_data(sql)
+
+    return 1, result[0], "Successful registration, go to login!"
 
 
 def test_sign_in():
