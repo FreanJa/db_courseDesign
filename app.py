@@ -143,9 +143,15 @@ def modify_acc():
 @app.route("/removeComments", methods=["POST"])
 def remove_comment():
     data = json.loads(request.get_data(as_text=True))
-    info = postOpr.remove_comment(data['commentId'])
 
-    return jsonify(info)
+    info = {"error": True, "desc": ""}
+    state, count, comments, desc = postOpr.remove_comment(data['commentId'])
+    if state == 1:
+        info["error"] = False
+    info["desc"] = desc
+    response = {"comments": comments, "count": count, "info": [info]}
+
+    return jsonify(response)
 
 
 if __name__ == '__main__':
