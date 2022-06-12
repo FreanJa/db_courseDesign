@@ -44,11 +44,19 @@ class MySql:
         self.db.commit()
         return insert
 
+    # 更新语句
     def update(self, sql):
         update = self.cur.execute(sql)
         print("受影响行数:%d" % update)
         self.db.commit()
         return update
+
+    # 删除语句
+    def remove(self, sql):
+        remove = self.cur.execute(sql)
+        print("受影响行数:%d" % remove)
+        self.db.commit()
+        return remove
 
     # 关闭连接
     def close_db(self):

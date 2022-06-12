@@ -95,6 +95,17 @@ def create_comment(postId, userId, comment):
     return get_all_comments(postId)
 
 
+def remove_comment(commentId):
+    db = my_sql.MySql()
+    sql = "delete from comments where commentsId = '" + str(commentId) + "';"
+    print(sql)
+    remove = db.insert(sql)
+    if remove == 0:
+        return True, "Unknown error, please contact your administrator"
+
+    return False, "Remove success"
+
+
 if __name__ == '__main__':
     # error, posts, desc = get_all_post()
     # create_comment(12, 3, "asasdadasd")

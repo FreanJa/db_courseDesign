@@ -140,6 +140,14 @@ def modify_acc():
     return jsonify(info)
 
 
+@app.route("/removeComments", methods=["POST"])
+def remove_comment():
+    data = json.loads(request.get_data(as_text=True))
+    info = postOpr.remove_comment(data['commentId'])
+
+    return jsonify(info)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 
