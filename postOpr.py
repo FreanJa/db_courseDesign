@@ -29,7 +29,7 @@ def get_user_info(id):
 def get_all_post():
     postList = {}
     db = my_sql.MySql()
-    sql = "select * from posts"
+    sql = "select * from posts order by comments desc;"
 
     count = db.get_count(sql)
 
