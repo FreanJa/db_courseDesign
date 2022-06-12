@@ -132,6 +132,14 @@ def create_comment():
     return jsonify(response)
 
 
+@app.route("/modifyAccount", methods=["POST"])
+def modify_acc():
+    data = json.loads(request.get_data(as_text=True))
+    info = accountOpr.modify_account(data['tag'], data['userId'], data['new'])
+
+    return jsonify(info)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 

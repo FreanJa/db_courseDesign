@@ -68,6 +68,22 @@ def sign_up(in_email, in_name, in_passwd, rand_photo):
     return 1, result[0], "Successful registration, go to login!"
 
 
+def modify_account(tag, id, new):
+    db = my_sql.MySql()
+    if tag == 0:
+        sql = "update userAccount set username = '" + new + "' where uuid = " + str(id) + ";"
+    elif tag == 1:
+        sql = "update userAccount set photo = '" + new + "' where uuid = " + str(id) + ";"
+    else:
+        sql = "update userAccount set email = '" + new + "' where uuid = " + str(id) + ";"
+    print(sql)
+    update = db.update(sql)
+
+    if update == 0:
+        return True, "Unknown error, please contact your administrator"
+    return False, "Modify success!"
+
+
 def test_sign_in():
     username = "freanja"
     email = "freanja.l@gmail.com"
