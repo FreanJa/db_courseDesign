@@ -115,6 +115,23 @@ def fetch_comments():
     return jsonify(response)
 
 
+@app.route("/createComment", methods=["POST"])
+def create_comment():
+    data = json.loads(request.get_data(as_text=True))
+
+    info = {"error": True, "desc": ""}
+    state, count, comments, desc = postOpr.create_comment(data['postId'], data['userId'], data['comment'])
+    if state == 1:
+        info["error"] = False
+    info["desc"] = desc
+    response = {"comments": comments, "count": count, "info": [info]}
+
+    for post in response["comments"]:
+        print(post)
+
+    return jsonify(response)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 

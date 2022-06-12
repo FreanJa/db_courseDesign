@@ -4,6 +4,8 @@
 # @Email   : root@freanja.cn
 # @File    : postOpr.py.py
 # @Desc    :
+import time
+
 import my_sql
 
 
@@ -70,12 +72,32 @@ def get_all_comments(id):
     comments = []
     for row in result:
         un, up = get_user_info(row[2])
-        comment = {"commentsId": row[0], "postId": row[1], "userId": row[2], "userName": un, "userPhoto": up, "time": row[3], "text": row[4]}
+        comment = {"commentsId": row[0], "postId": row[1], "userId": row[2], "userName": un, "userPhoto": up,
+                   "time": row[3], "text": row[4]}
         comments.append(comment)
 
     return 1, count, comments, "success"
 
 
+def create_comment(postId, userId, comment):
+    db = my_sql.MySql()
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+    sql = "insert into comments (postId, userId, time, text) values (" + \
+          str(postId) + "," + \
+          str(userId) + ",'" + \
+          current_time + "','" + \
+          comment + "');"
+    print(sql)
+    insert = db.insert(sql)
+    if insert == 0:
+        return 0, 0, {}, "Unknown error, please contact your administrator"
+
+    return get_all_comments(postId)
+
+
 if __name__ == '__main__':
     # error, posts, desc = get_all_post()
+    # create_comment(12, 3, "asasdadasd")
     pass
+
+
